@@ -6,3 +6,5 @@
 playground/
 
 docker-compose.override.yml
+BuildMe.sh
+lapis-config.yml
