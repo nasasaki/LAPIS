@@ -1,10 +1,10 @@
 # Editors
 .idea/
-app/
 *.iml
 
 # Personal preference
 playground/
+app/
 
 docker-compose.override.yml
 BuildMe.sh
