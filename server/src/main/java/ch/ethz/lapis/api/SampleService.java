@@ -109,6 +109,8 @@ public class SampleService {
                 add(tbl.GISAID_EPI_ISL);
                 add(tbl.STRAIN);
                 add(tbl.DATE);
+                add(tbl.YEAR);
+                add(tbl.MONTH);
                 add(tbl.DATE_SUBMITTED);
                 add(tbl.REGION);
                 add(tbl.COUNTRY);
@@ -144,6 +146,8 @@ public class SampleService {
                     .setGisaidEpiIsl(r.get(tbl.GISAID_EPI_ISL))
                     .setStrain(r.get(tbl.STRAIN))
                     .setDate(r.get(tbl.DATE))
+                    .setYear(r.get(tbl.YEAR))
+                    .setMonth(r.get(tbl.MONTH))
                     .setDateSubmitted(r.get(tbl.DATE_SUBMITTED))
                     .setRegion(r.get(tbl.REGION))
                     .setCountry(r.get(tbl.COUNTRY))
@@ -338,8 +342,8 @@ public class SampleService {
             return database.getNucInsertionStore().countInsertions(ids).stream()
                 // Append "ins_" to the insertion string
                 .map(ins -> new InsertionStore.InsertionCount(
-                    "ins_" + ins.getInsertion(),
-                    ins.getCount()
+                    "ins_" + ins.insertion(),
+                    ins.count()
                 ))
                 .collect(Collectors.toList());
         } else {
@@ -348,8 +352,8 @@ public class SampleService {
                 var insertionsOfGene = store.countInsertions(ids).stream()
                     // Append "ins_" and the gene to the insertion string
                     .map(ins -> new InsertionStore.InsertionCount(
-                        "ins_" + gene + ":" + ins.getInsertion(),
-                        ins.getCount()
+                        "ins_" + gene + ":" + ins.insertion(),
+                        ins.count()
                     ))
                     .collect(Collectors.toList());
                 result.addAll(insertionsOfGene);

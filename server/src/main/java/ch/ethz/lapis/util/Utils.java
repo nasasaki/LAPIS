@@ -1,6 +1,6 @@
 package ch.ethz.lapis.util;
 
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -174,6 +174,24 @@ public class Utils {
         } catch (IOException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    /**
+     * @param alignmentStart Following bioinformatics conventions, the index starts with 1
+     * @param alignmentEnd Following bioinformatics conventions, the index starts with 1
+     */
+    public static String maskUnalignedBasesAsUnknown(String alignedSeq, int alignmentStart, int alignmentEnd) {
+        int indexStart = alignmentStart - 1;
+        int indexEnd = alignmentEnd - 1;
+        char[] arr = alignedSeq.toCharArray();
+        for (int i = 0; i < indexStart; i++) {
+            arr[i] = 'N';
+        }
+        for (int i = arr.length - 1; i > indexEnd; i--) {
+            arr[i] = 'N';
+        }
+        return new String(arr);
     }
 
 }
