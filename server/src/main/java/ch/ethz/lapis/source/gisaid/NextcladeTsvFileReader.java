@@ -20,7 +20,9 @@ public class NextcladeTsvFileReader
         this.in = in;
         try {
             CSVFormat format = CSVFormat.TDF
-                .withFirstRecordAsHeader();
+                .builder()
+                .setHeader().setSkipHeaderRecord(true)
+                .build();
             CSVParser parser = CSVParser.parse(in, StandardCharsets.UTF_8, format);
             iterator = parser.iterator();
         } catch (IOException e) {
@@ -88,6 +90,7 @@ public class NextcladeTsvFileReader
             .setQcStopCodonsTotalStopCodons(Utils.nullableForcedIntegerValue(csv.get("qc.stopCodons.totalStopCodons")))
             .setQcStopCodonsScore(Utils.nullableFloatValue(csv.get("qc.stopCodons.score")))
             .setQcStopCodonsStatus(cleanString(csv.get("qc.stopCodons.status")))
+            .setCoverage(Utils.nullableFloatValue(csv.get("coverage")))
             .setErrors(cleanString(csv.get("errors")));
     }
 

@@ -1,4 +1,4 @@
-// Generated from ch/ethz/lapis/api/parser/VariantQuery.g4 by ANTLR 4.9.3
+// Generated from ch\ethz\lapis\api\parser\VariantQuery.g4 by ANTLR 4.10.1
 
     package ch.ethz.lapis.api.parser;
 
@@ -55,6 +55,18 @@ public interface VariantQueryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNeg(VariantQueryParser.NegContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Maybe}
+	 * labeled alternative in {@link VariantQueryParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMaybe(VariantQueryParser.MaybeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Maybe}
+	 * labeled alternative in {@link VariantQueryParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMaybe(VariantQueryParser.MaybeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Or}
 	 * labeled alternative in {@link VariantQueryParser#expr}.

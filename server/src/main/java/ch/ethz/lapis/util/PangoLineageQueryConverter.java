@@ -5,28 +5,18 @@ import java.util.List;
 
 public class PangoLineageQueryConverter {
 
-    public class PangoLineageQueryMatch {
-        private final List<String> exact;
-        private final List<String> prefix;
-
-        public PangoLineageQueryMatch(List<String> exact, List<String> prefix) {
-            this.exact = exact;
-            this.prefix = prefix;
-        }
-
-        public List<String> getExact() {
-            return exact;
-        }
-
-        public List<String> getPrefix() {
-            return prefix;
-        }
+    public record PangoLineageQueryMatch(List<String> exact, List<String> prefix) {
     }
 
-    private final PangoLineageAliasResolver pangoLineageAliasResolver;
+    private PangoLineageAliasResolver pangoLineageAliasResolver;
 
 
     public PangoLineageQueryConverter(List<PangoLineageAlias> aliases) {
+        this.pangoLineageAliasResolver = new PangoLineageAliasResolver(aliases);
+    }
+
+
+    public void updateAliases(List<PangoLineageAlias> aliases) {
         this.pangoLineageAliasResolver = new PangoLineageAliasResolver(aliases);
     }
 

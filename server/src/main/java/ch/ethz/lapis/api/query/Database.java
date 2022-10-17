@@ -19,6 +19,8 @@ public class Database {
         public static final String GISAID_EPI_ISL  = "gisaid_epi_isl"; // String
         public static final String STRAIN  = "strain"; // String
         public static final String DATE = "date"; // Date
+        public static final String YEAR = "year"; // Integer
+        public static final String MONTH = "month"; // Integer
         public static final String DATE_SUBMITTED = "date_submitted"; // Date
         public static final String REGION = "region"; // String
         public static final String COUNTRY = "country"; // String
@@ -47,15 +49,16 @@ public class Database {
         public static final String NEXTCLADE_QC_SNP_CLUSTERS_SCORE = "nextclade_qc_snp_clusters_score"; // Float
         public static final String NEXTCLADE_QC_FRAME_SHIFTS_SCORE = "nextclade_qc_frame_shifts_score"; // Float
         public static final String NEXTCLADE_QC_STOP_CODONS_SCORE = "nextclade_qc_stop_codons_score"; // Float
+        public static final String NEXTCLADE_COVERAGE = "nextclade_coverage"; // Float
     }
 
     public static final String[] ALL_COLUMNS = new String[] {
         Columns.GENBANK_ACCESSION, Columns.SRA_ACCESSION, Columns.GISAID_EPI_ISL, Columns.STRAIN,
-        Columns.DATE, Columns.DATE_SUBMITTED, Columns.REGION, Columns.COUNTRY, Columns.DIVISION,
-        Columns.LOCATION, Columns.REGION_EXPOSURE, Columns.COUNTRY_EXPOSURE, Columns.DIVISION_EXPOSURE,
-        Columns.HOST, Columns.AGE, Columns.SEX, Columns.HOSPITALIZED, Columns.DIED, Columns.FULLY_VACCINATED,
-        Columns.SAMPLING_STRATEGY, Columns.PANGO_LINEAGE, Columns.NEXTSTRAIN_CLADE, Columns.GISAID_CLADE,
-        Columns.ORIGINATING_LAB, Columns.SUBMITTING_LAB
+        Columns.DATE, Columns.YEAR, Columns.MONTH, Columns.DATE_SUBMITTED, Columns.REGION, Columns.COUNTRY,
+        Columns.DIVISION, Columns.LOCATION, Columns.REGION_EXPOSURE, Columns.COUNTRY_EXPOSURE,
+        Columns.DIVISION_EXPOSURE, Columns.HOST, Columns.AGE, Columns.SEX, Columns.HOSPITALIZED, Columns.DIED,
+        Columns.FULLY_VACCINATED, Columns.SAMPLING_STRATEGY, Columns.PANGO_LINEAGE, Columns.NEXTSTRAIN_CLADE,
+        Columns.GISAID_CLADE, Columns.ORIGINATING_LAB, Columns.SUBMITTING_LAB
     };
     public static final String[] STRING_COLUMNS = new String[] {
         Columns.GENBANK_ACCESSION, Columns.SRA_ACCESSION, Columns.GISAID_EPI_ISL, Columns.STRAIN,
@@ -68,13 +71,13 @@ public class Database {
         Columns.DATE, Columns.DATE_SUBMITTED
     };
     public static final String[] INTEGER_COLUMNS = new String[] {
-        Columns.AGE
+        Columns.AGE, Columns.YEAR, Columns.MONTH
     };
     public static final String[] FLOAT_COLUMNS = new String[] {
         Columns.NEXTCLADE_QC_OVERALL_SCORE, Columns.NEXTCLADE_QC_MISSING_DATA_SCORE,
         Columns.NEXTCLADE_QC_MIXED_SITES_SCORE, Columns.NEXTCLADE_QC_PRIVATE_MUTATIONS_SCORE,
         Columns.NEXTCLADE_QC_SNP_CLUSTERS_SCORE, Columns.NEXTCLADE_QC_FRAME_SHIFTS_SCORE,
-        Columns.NEXTCLADE_QC_STOP_CODONS_SCORE
+        Columns.NEXTCLADE_QC_STOP_CODONS_SCORE, Columns.NEXTCLADE_COVERAGE
     };
     public static final String[] BOOLEAN_COLUMNS = new String[] {
         Columns.HOSPITALIZED, Columns.DIED, Columns.FULLY_VACCINATED
@@ -188,28 +191,6 @@ public class Database {
     }
 
 
-    private static List<PangoLineageAlias> getPangolinLineageAliases(Connection conn) throws SQLException {
-        String sql = """
-            select
-              alias,
-              full_name
-            from pangolin_lineage_alias;
-        """;
-        try (Statement statement = conn.createStatement()) {
-            try (ResultSet rs = statement.executeQuery(sql)) {
-                List<PangoLineageAlias> aliases = new ArrayList<>();
-                while (rs.next()) {
-                    aliases.add(new PangoLineageAlias(
-                        rs.getString("alias"),
-                        rs.getString("full_name")
-                    ));
-                }
-                return aliases;
-            }
-        }
-    }
-
-
     public char[] getNucArray(int position) {
         String sql = """
             select data_compressed
@@ -265,6 +246,29 @@ public class Database {
             throw new RuntimeException(e);
         }
     }
+
+
+    public static List<PangoLineageAlias> getPangoLineageAliases(Connection conn) throws SQLException {
+        String sql = """
+            select
+              alias,
+              full_name
+            from pangolin_lineage_alias;
+        """;
+        try (Statement statement = conn.createStatement()) {
+            try (ResultSet rs = statement.executeQuery(sql)) {
+                List<PangoLineageAlias> aliases = new ArrayList<>();
+                while (rs.next()) {
+                    aliases.add(new PangoLineageAlias(
+                        rs.getString("alias"),
+                        rs.getString("full_name")
+                    ));
+                }
+                return aliases;
+            }
+        }
+    }
+
 
     public static void updateInstance(ComboPooledDataSource databasePool) {
         try {
@@ -330,7 +334,7 @@ public class Database {
 
                 }
                 // Fetch pango lineage aliases
-                List<PangoLineageAlias> aliases = getPangolinLineageAliases(conn);
+                List<PangoLineageAlias> aliases = getPangoLineageAliases(conn);
                 PangoLineageQueryConverter pangoLineageQueryConverter = new PangoLineageQueryConverter(aliases);
                 // Create database object
                 database = new Database(
