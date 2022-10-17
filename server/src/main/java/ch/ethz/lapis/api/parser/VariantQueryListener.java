@@ -1,4 +1,4 @@
-// Generated from ch\ethz\lapis\api\parser\VariantQuery.g4 by ANTLR 4.9.3
+// Generated from ch/ethz/lapis/api/parser/VariantQuery.g4 by ANTLR 4.9.3
 
     package ch.ethz.lapis.api.parser;
 
