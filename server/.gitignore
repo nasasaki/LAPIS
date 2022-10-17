@@ -2,3 +2,5 @@
 build/
 app/
 lapis-config.yml*
+
+*.BAK
