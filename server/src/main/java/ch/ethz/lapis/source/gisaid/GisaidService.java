@@ -110,18 +110,18 @@ public class GisaidService {
         GeoLocationMapper geoLocationMapper = new GeoLocationMapper(geoLocationRulesFile);
 
         // Download data
-        Path gisaidDataFile = workdir.resolve("provision.json.xz");
-        try {
-            downloadDataPackage(
-                new URL(gisaidApiConfig.getUrl()),
-                gisaidApiConfig.getUsername(),
-                gisaidApiConfig.getPassword(),
-                gisaidDataFile
-            );
-        } catch (IOException e) {
-            System.err.println(LocalDateTime.now() + " provision.json.xz could not be downloaded from GISAID");
-            throw e;
-        }
+        Path gisaidDataFile = workdir.resolve("provision_domestic.json.xz");
+        // try {
+        //     downloadDataPackage(
+        //         new URL(gisaidApiConfig.getUrl()),
+        //         gisaidApiConfig.getUsername(),
+        //         gisaidApiConfig.getPassword(),
+        //         gisaidDataFile
+        //     );
+        // } catch (IOException e) {
+        //     System.err.println(LocalDateTime.now() + " provision.json.xz could not be downloaded from GISAID");
+        //     throw e;
+        // }
 
         // Load the list of all GISAID EPI ISL and hashes from the database.
         String loadExistingSql = """
@@ -226,10 +226,10 @@ public class GisaidService {
             if (batchEntries.size() >= batchSize) {
                 Batch batch = new Batch(batchEntries);
                 while (!emergencyBrake.get()) {
-                    System.out.println(LocalDateTime.now() + " [main] Try adding a batch");
+                    // System.out.println(LocalDateTime.now() + " [main] Try adding a batch");
                     boolean success = gisaidBatchQueue.offer(batch, 5, TimeUnit.SECONDS);
                     if (success) {
-                        System.out.println(LocalDateTime.now() + " [main] Batch added");
+                        // System.out.println(LocalDateTime.now() + " [main] Batch added");
                         break;
                     }
                 }
@@ -239,10 +239,10 @@ public class GisaidService {
         if (!emergencyBrake.get() && !batchEntries.isEmpty()) {
             Batch lastBatch = new Batch(batchEntries);
             while (!emergencyBrake.get()) {
-                System.out.println(LocalDateTime.now() + " [main] Try adding a batch");
+                // System.out.println(LocalDateTime.now() + " [main] Try adding a batch");
                 boolean success = gisaidBatchQueue.offer(lastBatch, 5, TimeUnit.SECONDS);
                 if (success) {
-                    System.out.println(LocalDateTime.now() + " [main] Batch added");
+                    // System.out.println(LocalDateTime.now() + " [main] Batch added");
                     break;
                 }
             }
@@ -342,57 +342,58 @@ public class GisaidService {
 
         // Fetch submitter information
         System.out.println("Found " + missingGisaidIds.size() + " GISAID entries with missing submitter information.");
-        SubmitterInformationFetcher fetcher = new SubmitterInformationFetcher();
-        List<Pair<String, SubmitterInformation>> submitterInformationList = new ArrayList<>();
-        int i = 0;
-        for (String gisaidId : missingGisaidIds) {
-            var result = fetcher.fetchSubmitterInformation(gisaidId);
-            switch (result.status()) {
-                case SUCCESSFUL -> submitterInformationList.add(new Pair<>(gisaidId, result.value()));
-                case NOT_FOUND -> {}
-                case TOO_MANY_REQUESTS -> {
-                    System.out.println("Maybe rate-limited? Let's wait for 20 minutes");
-                    Thread.sleep(1000 * 60 * 20);
-                }
-                case UNEXPECTED_ERROR -> {
-                    System.out.println("Unsure what happened.. Let's wait for 20 minutes");
-                    Thread.sleep(1000 * 60 * 20);
-                }
-            }
-            i++;
-            Thread.sleep(2000);
-            if (i % 20 == 0) {
-                System.out.println("Progress: " + i + "/" + missingGisaidIds.size());
-            }
-            if (i % 100 == 0 || i == missingGisaidIds.size()) {
-                // Write submitter information to database
-                String writeSql = """
-                    update y_gisaid
-                    set
-                      originating_lab = ?,
-                      submitting_lab = ?,
-                      authors = ?
-                    where gisaid_epi_isl = ?;
-                """;
-                try (Connection conn = databasePool.getConnection()) {
-                    conn.setAutoCommit(false);
-                    try (PreparedStatement statement = conn.prepareStatement(writeSql)) {
-                        for (Pair<String, SubmitterInformation> p : submitterInformationList) {
-                            String gisaidEpiIsl = p.getValue0();
-                            SubmitterInformation info = p.getValue1();
-                            statement.setString(1, info.getOriginatingLab());
-                            statement.setString(2, info.getSubmittingLab());
-                            statement.setString(3, info.getAuthors());
-                            statement.setString(4, gisaidEpiIsl);
-                            statement.addBatch();
-                        }
-                        Utils.executeClearCommitBatch(conn, statement);
-                    }
-                }
-                System.out.println("Wrote " + submitterInformationList.size() + " entries to database.");
-                submitterInformationList = new ArrayList<>();
-            }
-        }
+
+        // SubmitterInformationFetcher fetcher = new SubmitterInformationFetcher();
+        // List<Pair<String, SubmitterInformation>> submitterInformationList = new ArrayList<>();
+        // int i = 0;
+        // for (String gisaidId : missingGisaidIds) {
+        //     var result = fetcher.fetchSubmitterInformation(gisaidId);
+        //     switch (result.getStatus()) {
+        //         case SUCCESSFUL -> submitterInformationList.add(new Pair<>(gisaidId, result.getValue()));
+        //         case NOT_FOUND -> {}
+        //         case TOO_MANY_REQUESTS -> {
+        //             System.out.println("Maybe rate-limited? Let's wait for 20 minutes");
+        //             Thread.sleep(1000 * 60 * 20);
+        //         }
+        //         case UNEXPECTED_ERROR -> {
+        //             System.out.println("Unsure what happened.. Let's wait for 20 minutes");
+        //             Thread.sleep(1000 * 60 * 20);
+        //         }
+        //     }
+        //     i++;
+        //     Thread.sleep(2000);
+        //     if (i % 20 == 0) {
+        //         System.out.println("Progress: " + i + "/" + missingGisaidIds.size());
+        //     }
+        //     if (i % 100 == 0 || i == missingGisaidIds.size()) {
+        //         // Write submitter information to database
+        //         String writeSql = """
+        //             update y_gisaid
+        //             set
+        //               originating_lab = ?,
+        //               submitting_lab = ?,
+        //               authors = ?
+        //             where gisaid_epi_isl = ?;
+        //         """;
+        //         try (Connection conn = databasePool.getConnection()) {
+        //             conn.setAutoCommit(false);
+        //             try (PreparedStatement statement = conn.prepareStatement(writeSql)) {
+        //                 for (Pair<String, SubmitterInformation> p : submitterInformationList) {
+        //                     String gisaidEpiIsl = p.getValue0();
+        //                     SubmitterInformation info = p.getValue1();
+        //                     statement.setString(1, info.getOriginatingLab());
+        //                     statement.setString(2, info.getSubmittingLab());
+        //                     statement.setString(3, info.getAuthors());
+        //                     statement.setString(4, gisaidEpiIsl);
+        //                     statement.addBatch();
+        //                 }
+        //                 Utils.executeClearCommitBatch(conn, statement);
+        //             }
+        //         }
+        //         System.out.println("Wrote " + submitterInformationList.size() + " entries to database.");
+        //         submitterInformationList = new ArrayList<>();
+        //     }
+        //}
     }
 
     private GisaidEntry parseDataPackageLine(

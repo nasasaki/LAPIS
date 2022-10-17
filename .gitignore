@@ -4,5 +4,7 @@
 
 # Personal preference
 playground/
-
+app/
+BuildMe.sh
+lapis-config.yml
 docker-compose.override.yml

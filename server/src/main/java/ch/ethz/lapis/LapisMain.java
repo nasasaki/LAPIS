@@ -40,7 +40,9 @@ public class LapisMain extends SubProgram<LapisConfig> {
         GlobalProxyManager.setProxyFromConfig(config.getHttpProxy());
         if ("--api".equals(args[0])) {
             String[] argsForSpring = Arrays.copyOfRange(args, 1, args.length);
+
             System.setProperty("spring.mvc.async.request-timeout", "600000"); // 10 minutes
+            System.setProperty("com.mchange.v2.log.Log4jMLog.DEFAULT_CUTOFF_LEVEL", "WARNING");
             SpringApplication app = new SpringApplication(LapisMain.class);
             app.setDefaultProperties(Collections.singletonMap("server.port", "2345"));
             app.run(argsForSpring);
@@ -51,6 +53,7 @@ public class LapisMain extends SubProgram<LapisConfig> {
                 throw new RuntimeException("Please provide the update steps. - TODO: write help page");
             }
             String[] updateSteps = args[1].split(",");
+            System.setProperty("com.mchange.v2.log.Log4jMLog.DEFAULT_CUTOFF_LEVEL", "WARNING");
             ComboPooledDataSource dbPool = DatabaseService.createDatabaseConnectionPool(config.getVineyard());
             Set<String> availableSteps = new HashSet<>() {{
                 add(UpdateSteps.loadNG);

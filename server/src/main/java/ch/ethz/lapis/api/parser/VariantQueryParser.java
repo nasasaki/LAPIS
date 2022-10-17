@@ -25,22 +25,22 @@ public class VariantQueryParser extends Parser {
 		Q=31, R=32, S=33, T=34, U=35, V=36, W=37, X=38, Y=39, Z=40, MINUS=41,
 		DOT=42, ASTERISK=43, ORF=44, NUMBER=45, WHITESPACE=46;
 	public static final int
-		RULE_start = 0, RULE_expr = 1, RULE_single = 2, RULE_nuc_mut = 3, RULE_aa_mut = 4,
-		RULE_nuc_ins = 5, RULE_aa_ins = 6, RULE_position = 7, RULE_aa = 8, RULE_aa_mutated = 9,
-		RULE_nuc = 10, RULE_nuc_mutated = 11, RULE_gene = 12, RULE_pango_query = 13,
-		RULE_pango_include_sub = 14, RULE_pango_lineage = 15, RULE_pango_number_component = 16,
-		RULE_nextclade_pango_lineage_prefix = 17, RULE_nextclade_pango_query = 18,
-		RULE_gisaid_clade = 19, RULE_gisaid_clade_prefix = 20, RULE_gisaid_clade_query = 21,
-		RULE_nextstrain_clade = 22, RULE_nextstrain_clade_prefix = 23, RULE_nextstrain_clade_query = 24,
-		RULE_character = 25, RULE_n_of = 26, RULE_n_of_exactly = 27, RULE_n_of_n = 28,
+		RULE_start = 0, RULE_expr = 1, RULE_single = 2, RULE_nuc_mut = 3, RULE_aa_mut = 4, 
+		RULE_nuc_ins = 5, RULE_aa_ins = 6, RULE_position = 7, RULE_aa = 8, RULE_aa_mutated = 9, 
+		RULE_nuc = 10, RULE_nuc_mutated = 11, RULE_gene = 12, RULE_pango_query = 13, 
+		RULE_pango_include_sub = 14, RULE_pango_lineage = 15, RULE_pango_number_component = 16, 
+		RULE_nextclade_pango_lineage_prefix = 17, RULE_nextclade_pango_query = 18, 
+		RULE_gisaid_clade = 19, RULE_gisaid_clade_prefix = 20, RULE_gisaid_clade_query = 21, 
+		RULE_nextstrain_clade = 22, RULE_nextstrain_clade_prefix = 23, RULE_nextstrain_clade_query = 24, 
+		RULE_character = 25, RULE_n_of = 26, RULE_n_of_exactly = 27, RULE_n_of_n = 28, 
 		RULE_n_of_exprs = 29;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"start", "expr", "single", "nuc_mut", "aa_mut", "nuc_ins", "aa_ins",
-			"position", "aa", "aa_mutated", "nuc", "nuc_mutated", "gene", "pango_query",
-			"pango_include_sub", "pango_lineage", "pango_number_component", "nextclade_pango_lineage_prefix",
-			"nextclade_pango_query", "gisaid_clade", "gisaid_clade_prefix", "gisaid_clade_query",
-			"nextstrain_clade", "nextstrain_clade_prefix", "nextstrain_clade_query",
+			"start", "expr", "single", "nuc_mut", "aa_mut", "nuc_ins", "aa_ins", 
+			"position", "aa", "aa_mutated", "nuc", "nuc_mutated", "gene", "pango_query", 
+			"pango_include_sub", "pango_lineage", "pango_number_component", "nextclade_pango_lineage_prefix", 
+			"nextclade_pango_query", "gisaid_clade", "gisaid_clade_prefix", "gisaid_clade_query", 
+			"nextstrain_clade", "nextstrain_clade_prefix", "nextstrain_clade_query", 
 			"character", "n_of", "n_of_exactly", "n_of_n", "n_of_exprs"
 		};
 	}
@@ -162,7 +162,7 @@ public class VariantQueryParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
-
+	 
 		public ExprContext() { }
 		public void copyFrom(ExprContext ctx) {
 			super.copyFrom(ctx);
@@ -393,7 +393,7 @@ public class VariantQueryParser extends Parser {
 						}
 						break;
 					}
-					}
+					} 
 				}
 				setState(87);
 				_errHandler.sync(this);
@@ -1508,7 +1508,7 @@ public class VariantQueryParser extends Parser {
 					setState(182);
 					pango_number_component();
 					}
-					}
+					} 
 				}
 				setState(187);
 				_errHandler.sync(this);
