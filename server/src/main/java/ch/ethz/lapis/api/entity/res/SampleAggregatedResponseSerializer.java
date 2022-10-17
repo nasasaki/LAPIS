@@ -18,11 +18,13 @@ public class SampleAggregatedResponseSerializer extends JsonSerializer<SampleAgg
         SerializerProvider serializers
     ) throws IOException {
         gen.writeStartArray();
-        for (SampleAggregated sample : resultSet.getSamples()) {
+        for (SampleAggregated sample : resultSet.samples()) {
             gen.writeStartObject();
-            for (AggregationField field : resultSet.getFields()) {
+            for (AggregationField field : resultSet.fields()) {
                 switch (field) {
                     case DATE -> gen.writeObjectField("date", sample.getDate());
+                    case YEAR -> gen.writeObjectField("year", sample.getYear());
+                    case MONTH -> gen.writeObjectField("month", sample.getMonth());
                     case DATESUBMITTED -> gen.writeObjectField("dateSubmitted", sample.getDateSubmitted());
                     case REGION -> gen.writeStringField("region", sample.getRegion());
                     case COUNTRY -> gen.writeStringField("country", sample.getCountry());
