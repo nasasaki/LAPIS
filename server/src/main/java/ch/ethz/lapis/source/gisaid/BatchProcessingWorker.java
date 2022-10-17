@@ -64,7 +64,6 @@ public class BatchProcessingWorker {
         try {
             int batchSize = batch.getEntries().size();
             // System.out.println(LocalDateTime.now() + " [" + id + "] Received a batch");
-
             // Remove entries from the batch where no sequence is provided -> very weird
             batch = new Batch(batch.entries().stream()
                 .filter(s -> s.getSeqOriginal() != null && !s.getSeqOriginal().isBlank())
