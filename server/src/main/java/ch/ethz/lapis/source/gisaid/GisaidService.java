@@ -342,6 +342,7 @@ public class GisaidService {
 
         // Fetch submitter information
         System.out.println("Found " + missingGisaidIds.size() + " GISAID entries with missing submitter information.");
+
         // SubmitterInformationFetcher fetcher = new SubmitterInformationFetcher();
         // List<Pair<String, SubmitterInformation>> submitterInformationList = new ArrayList<>();
         // int i = 0;
