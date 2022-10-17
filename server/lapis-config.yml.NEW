@@ -1,0 +1,27 @@
+version: 1
+default:
+    httpProxy:
+        activated: FALSE
+        host: proxy.nih.go.jp
+        port: 8080
+    workdir: /home/sasaki/git/LAPIS/work
+    maxNumberWorkers: 8
+#    gisaidApiConfig:
+#        url:
+#        username:
+#        password:
+Lapis:
+    redisHost: 192.168.114.46
+    redisPort: 6789
+    cacheEnabled: TRUE
+    apiOpennessLevel: 1
+    nextalignPath: /home/sasaki/git/LAPIS/app
+    geoLocationRulesPath: /home/sasaki/git/LAPIS/app
+    vineyard:
+        host: 192.168.114.46
+        port: 5432
+        dbname: sars_cov_2
+        username: y_user
+        password: y_user
+        schema: public
+#        s3cVineyard: 

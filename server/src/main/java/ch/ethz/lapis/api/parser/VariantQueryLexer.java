@@ -1,4 +1,4 @@
-// Generated from ch\ethz\lapis\api\parser\VariantQuery.g4 by ANTLR 4.9.3
+// Generated from ch/ethz/lapis/api/parser/VariantQuery.g4 by ANTLR 4.9.3
 
     package ch.ethz.lapis.api.parser;
 
@@ -19,10 +19,10 @@ public class VariantQueryLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9,
-		T__9=10, T__10=11, T__11=12, T__12=13, A=14, B=15, C=16, D=17, E=18, F=19,
-		G=20, H=21, I=22, J=23, K=24, L=25, M=26, N=27, O=28, P=29, Q=30, R=31,
-		S=32, T=33, U=34, V=35, W=36, X=37, Y=38, Z=39, MINUS=40, DOT=41, ASTERISK=42,
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, T__12=13, A=14, B=15, C=16, D=17, E=18, F=19, 
+		G=20, H=21, I=22, J=23, K=24, L=25, M=26, N=27, O=28, P=29, Q=30, R=31, 
+		S=32, T=33, U=34, V=35, W=36, X=37, Y=38, Z=39, MINUS=40, DOT=41, ASTERISK=42, 
 		ORF=43, NUMBER=44, WHITESPACE=45;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
@@ -34,10 +34,10 @@ public class VariantQueryLexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8",
-			"T__9", "T__10", "T__11", "T__12", "A", "B", "C", "D", "E", "F", "G",
-			"H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
-			"V", "W", "X", "Y", "Z", "MINUS", "DOT", "ASTERISK", "ORF", "NUMBER",
+			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
+			"T__9", "T__10", "T__11", "T__12", "A", "B", "C", "D", "E", "F", "G", 
+			"H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", 
+			"V", "W", "X", "Y", "Z", "MINUS", "DOT", "ASTERISK", "ORF", "NUMBER", 
 			"WHITESPACE"
 		};
 	}
@@ -45,19 +45,19 @@ public class VariantQueryLexer extends Lexer {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'!'", "'&'", "'|'", "'('", "')'", "':'", "'INS_'", "'?'", "'['",
-			"'-OF:'", "']'", "'EXACTLY-'", "','", "'A'", "'B'", "'C'", "'D'", "'E'",
-			"'F'", "'G'", "'H'", "'I'", "'J'", "'K'", "'L'", "'M'", "'N'", "'O'",
-			"'P'", "'Q'", "'R'", "'S'", "'T'", "'U'", "'V'", "'W'", "'X'", "'Y'",
+			null, "'!'", "'&'", "'|'", "'('", "')'", "':'", "'INS_'", "'?'", "'['", 
+			"'-OF:'", "']'", "'EXACTLY-'", "','", "'A'", "'B'", "'C'", "'D'", "'E'", 
+			"'F'", "'G'", "'H'", "'I'", "'J'", "'K'", "'L'", "'M'", "'N'", "'O'", 
+			"'P'", "'Q'", "'R'", "'S'", "'T'", "'U'", "'V'", "'W'", "'X'", "'Y'", 
 			"'Z'", "'-'", "'.'", "'*'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null,
-			null, null, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
+			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", 
 			"MINUS", "DOT", "ASTERISK", "ORF", "NUMBER", "WHITESPACE"
 		};
 	}

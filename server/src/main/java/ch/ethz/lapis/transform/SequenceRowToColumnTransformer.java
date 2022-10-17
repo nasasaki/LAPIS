@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-
+import ch.ethz.lapis.util.ReferenceGenomeData;
 
 /**
  * Given a list of k strings of length n (aligned sequences), this class produces n strings of length k. The
@@ -51,13 +51,22 @@ public class SequenceRowToColumnTransformer {
         Function<S, String> decompressor,
         BiConsumer<Integer, List<T>> consumer,
         Function<String, T> compressor,
-        char unknownCode
+        char unknownCode,
+        String geneName
     ) {
         try {
             if (compressedSequences.isEmpty()) {
                 return;
             }
-            int sequenceLength = decompressor.apply(compressedSequences.get(0)).length();
+            int sequenceLength;
+            if (geneName == "genome"){
+                sequenceLength = sequenceLength = ReferenceGenomeData.getInstance().getNucleotideSequence().length();
+            }else{
+                if(((ReferenceGenomeData.getInstance().getGeneAASequences().get(geneName)) == null)){
+                    System.out.println(geneName);
+                }
+                sequenceLength = ReferenceGenomeData.getInstance().getGeneAASequences().get(geneName).length();
+            }
             int numberIterations = (int) Math.ceil(sequenceLength * 1.0 / positionRangeSize);
             int numberTasksPerIteration = (int) Math.ceil(compressedSequences.size() * 1.0 / batchSize);
             ExecutorService executor = Executors.newFixedThreadPool(numberWorkers);
@@ -87,6 +96,12 @@ public class SequenceRowToColumnTransformer {
                                 } else {
                                     String decompressed = decompressor.apply(compressed);
                                     char[] seq = decompressed.toCharArray();
+                                    if (seq.length < endPos-startPos+1){
+                                         for (int i = startPos+seq.length; i < endPos; i++) {
+                                             decompressed += unknownCode;
+                                         }
+                                         seq = decompressed.toCharArray();
+                                     }
                                     for (int i = startPos; i < endPos; i++) {
                                         transformedData[i - startPos][seqIndex] = seq[i];
                                     }

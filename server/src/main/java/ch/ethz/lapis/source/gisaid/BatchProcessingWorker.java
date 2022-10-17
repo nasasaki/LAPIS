@@ -66,7 +66,7 @@ public class BatchProcessingWorker {
     public BatchReport run(Batch batch) throws Exception {
         try {
             int batchSize = batch.getEntries().size();
-            System.out.println(LocalDateTime.now() + " [" + id + "] Received a batch");
+            // System.out.println(LocalDateTime.now() + " [" + id + "] Received a batch");
 
             // Remove entries from the batch where no sequence is provided -> very weird
             batch = new Batch(batch.getEntries().stream()
@@ -110,10 +110,9 @@ public class BatchProcessingWorker {
                         + invalidSequences.stream().map(GisaidEntry::getGisaidEpiIsl)
                         .collect(Collectors.joining(",")));
             }
-
-            System.out.println(LocalDateTime.now() + " [" + id + "] " + validSequences.size() + " out of " + batchSize +
-                " sequences are new or have changed sequence.");
             if (!validSequences.isEmpty()) {
+                System.out.println(LocalDateTime.now() + " [" + id + "] " + validSequences.size() + " out of " + batchSize +
+                " sequences are new or have changed sequence.");
                 // Write the batch to a fasta file
                 Path originalSeqFastaPath = workDir.resolve("original.fasta");
                 System.out.println(LocalDateTime.now() + " [" + id + "] Write fasta to disk..");
@@ -189,7 +188,9 @@ public class BatchProcessingWorker {
             }
 
             // Write the data into the database
-            System.out.println(LocalDateTime.now() + " [" + id + "] Write to database..");
+            if (!validSequences.isEmpty()) {
+                System.out.println(LocalDateTime.now() + " [" + id + "] Write to database..");
+            }
             writeToDatabase(batch);
 
             // Create the batch report
@@ -210,7 +211,9 @@ public class BatchProcessingWorker {
                     }
                 }
             }
-            System.out.println(LocalDateTime.now() + " [" + id + "] Everything successful with no failed sequences");
+            if (!validSequences.isEmpty()) {
+                System.out.println(LocalDateTime.now() + " [" + id + "] Everything successful with no failed sequences");
+            }
             return new BatchReport()
                 .setAddedEntries(addedEntries)
                 .setUpdatedTotalEntries(updatedTotalEntries)
@@ -218,7 +221,9 @@ public class BatchProcessingWorker {
                 .setUpdatedSequenceEntries(updatedSequenceEntries);
         } finally {
             // Clean up the work directory
-            System.out.println(LocalDateTime.now() + " [" + id + "] Clean up");
+            if (!validSequences.isEmpty()) {
+                System.out.println(LocalDateTime.now() + " [" + id + "] Clean up");
+            }
             try (DirectoryStream<Path> directory = Files.newDirectoryStream(workDir)) {
                 for (Path path : directory) {
                     if (Files.isDirectory(path)) {
@@ -228,7 +233,9 @@ public class BatchProcessingWorker {
                     }
                 }
             }
-            System.out.println(LocalDateTime.now() + " [" + id + "] Done!");
+            if (!validSequences.isEmpty()) {
+                System.out.println(LocalDateTime.now() + " [" + id + "] Done!");
+            }
         }
     }
 
@@ -297,7 +304,7 @@ public class BatchProcessingWorker {
         Path outputPath = workDir.resolve("output");
         String command = nextcladePath.toAbsolutePath() +
             " run" +
-            " --input-dataset=/app/nextclade-data" + // TODO Move it to the configs
+            " --input-dataset=/usr/local/servers/cov-spectrum/lapis/nextclade_data" + // TODO Move it to the configs
             " --output-all=" + outputPath.toAbsolutePath() +
             " --output-basename=nextclade" +
             " --silent" +

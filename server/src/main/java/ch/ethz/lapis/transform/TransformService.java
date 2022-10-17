@@ -382,7 +382,8 @@ public class TransformService {
                 }
             },
             columnarCompressor::compress,
-            'N'
+            'N',
+            "genome"
         );
     }
 
@@ -453,7 +454,8 @@ public class TransformService {
                     }
                 },
                 columnarCompressor::compress,
-                'X'
+                'X',
+                gene
             );
         }
     }

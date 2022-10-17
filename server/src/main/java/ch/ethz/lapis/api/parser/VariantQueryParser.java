@@ -1,4 +1,4 @@
-// Generated from ch\ethz\lapis\api\parser\VariantQuery.g4 by ANTLR 4.9.3
+// Generated from ch/ethz/lapis/api/parser/VariantQuery.g4 by ANTLR 4.9.3
 
     package ch.ethz.lapis.api.parser;
 
@@ -19,28 +19,28 @@ public class VariantQueryParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9,
-		T__9=10, T__10=11, T__11=12, T__12=13, A=14, B=15, C=16, D=17, E=18, F=19,
-		G=20, H=21, I=22, J=23, K=24, L=25, M=26, N=27, O=28, P=29, Q=30, R=31,
-		S=32, T=33, U=34, V=35, W=36, X=37, Y=38, Z=39, MINUS=40, DOT=41, ASTERISK=42,
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, T__12=13, A=14, B=15, C=16, D=17, E=18, F=19, 
+		G=20, H=21, I=22, J=23, K=24, L=25, M=26, N=27, O=28, P=29, Q=30, R=31, 
+		S=32, T=33, U=34, V=35, W=36, X=37, Y=38, Z=39, MINUS=40, DOT=41, ASTERISK=42, 
 		ORF=43, NUMBER=44, WHITESPACE=45;
 	public static final int
-		RULE_start = 0, RULE_expr = 1, RULE_single = 2, RULE_nuc_mut = 3, RULE_aa_mut = 4,
-		RULE_nuc_ins = 5, RULE_aa_ins = 6, RULE_position = 7, RULE_aa = 8, RULE_aa_mutated = 9,
-		RULE_nuc = 10, RULE_nuc_mutated = 11, RULE_gene = 12, RULE_pango_query = 13,
-		RULE_pango_include_sub = 14, RULE_pango_lineage = 15, RULE_pango_number_component = 16,
-		RULE_nextclade_pango_lineage_prefix = 17, RULE_nextclade_pango_query = 18,
-		RULE_gisaid_clade = 19, RULE_gisaid_clade_prefix = 20, RULE_gisaid_clade_query = 21,
-		RULE_nextstrain_clade = 22, RULE_nextstrain_clade_prefix = 23, RULE_nextstrain_clade_query = 24,
-		RULE_character = 25, RULE_n_of = 26, RULE_n_of_exactly = 27, RULE_n_of_n = 28,
+		RULE_start = 0, RULE_expr = 1, RULE_single = 2, RULE_nuc_mut = 3, RULE_aa_mut = 4, 
+		RULE_nuc_ins = 5, RULE_aa_ins = 6, RULE_position = 7, RULE_aa = 8, RULE_aa_mutated = 9, 
+		RULE_nuc = 10, RULE_nuc_mutated = 11, RULE_gene = 12, RULE_pango_query = 13, 
+		RULE_pango_include_sub = 14, RULE_pango_lineage = 15, RULE_pango_number_component = 16, 
+		RULE_nextclade_pango_lineage_prefix = 17, RULE_nextclade_pango_query = 18, 
+		RULE_gisaid_clade = 19, RULE_gisaid_clade_prefix = 20, RULE_gisaid_clade_query = 21, 
+		RULE_nextstrain_clade = 22, RULE_nextstrain_clade_prefix = 23, RULE_nextstrain_clade_query = 24, 
+		RULE_character = 25, RULE_n_of = 26, RULE_n_of_exactly = 27, RULE_n_of_n = 28, 
 		RULE_n_of_exprs = 29;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"start", "expr", "single", "nuc_mut", "aa_mut", "nuc_ins", "aa_ins",
-			"position", "aa", "aa_mutated", "nuc", "nuc_mutated", "gene", "pango_query",
-			"pango_include_sub", "pango_lineage", "pango_number_component", "nextclade_pango_lineage_prefix",
-			"nextclade_pango_query", "gisaid_clade", "gisaid_clade_prefix", "gisaid_clade_query",
-			"nextstrain_clade", "nextstrain_clade_prefix", "nextstrain_clade_query",
+			"start", "expr", "single", "nuc_mut", "aa_mut", "nuc_ins", "aa_ins", 
+			"position", "aa", "aa_mutated", "nuc", "nuc_mutated", "gene", "pango_query", 
+			"pango_include_sub", "pango_lineage", "pango_number_component", "nextclade_pango_lineage_prefix", 
+			"nextclade_pango_query", "gisaid_clade", "gisaid_clade_prefix", "gisaid_clade_query", 
+			"nextstrain_clade", "nextstrain_clade_prefix", "nextstrain_clade_query", 
 			"character", "n_of", "n_of_exactly", "n_of_n", "n_of_exprs"
 		};
 	}
@@ -48,19 +48,19 @@ public class VariantQueryParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'!'", "'&'", "'|'", "'('", "')'", "':'", "'INS_'", "'?'", "'['",
-			"'-OF:'", "']'", "'EXACTLY-'", "','", "'A'", "'B'", "'C'", "'D'", "'E'",
-			"'F'", "'G'", "'H'", "'I'", "'J'", "'K'", "'L'", "'M'", "'N'", "'O'",
-			"'P'", "'Q'", "'R'", "'S'", "'T'", "'U'", "'V'", "'W'", "'X'", "'Y'",
+			null, "'!'", "'&'", "'|'", "'('", "')'", "':'", "'INS_'", "'?'", "'['", 
+			"'-OF:'", "']'", "'EXACTLY-'", "','", "'A'", "'B'", "'C'", "'D'", "'E'", 
+			"'F'", "'G'", "'H'", "'I'", "'J'", "'K'", "'L'", "'M'", "'N'", "'O'", 
+			"'P'", "'Q'", "'R'", "'S'", "'T'", "'U'", "'V'", "'W'", "'X'", "'Y'", 
 			"'Z'", "'-'", "'.'", "'*'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null,
-			null, null, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
+			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", 
 			"MINUS", "DOT", "ASTERISK", "ORF", "NUMBER", "WHITESPACE"
 		};
 	}
@@ -162,7 +162,7 @@ public class VariantQueryParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
-
+	 
 		public ExprContext() { }
 		public void copyFrom(ExprContext ctx) {
 			super.copyFrom(ctx);
@@ -366,7 +366,7 @@ public class VariantQueryParser extends Parser {
 						}
 						break;
 					}
-					}
+					} 
 				}
 				setState(83);
 				_errHandler.sync(this);
@@ -686,7 +686,7 @@ public class VariantQueryParser extends Parser {
 			position();
 			setState(113);
 			match(T__5);
-			setState(116);
+			setState(116); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -731,7 +731,7 @@ public class VariantQueryParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(118);
+				setState(118); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -792,7 +792,7 @@ public class VariantQueryParser extends Parser {
 			position();
 			setState(124);
 			match(T__5);
-			setState(127);
+			setState(127); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -844,7 +844,7 @@ public class VariantQueryParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(129);
+				setState(129); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -887,7 +887,7 @@ public class VariantQueryParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(132);
+			setState(132); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -903,7 +903,7 @@ public class VariantQueryParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(134);
+				setState(134); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -1481,7 +1481,7 @@ public class VariantQueryParser extends Parser {
 					setState(178);
 					pango_number_component();
 					}
-					}
+					} 
 				}
 				setState(183);
 				_errHandler.sync(this);
@@ -2241,7 +2241,7 @@ public class VariantQueryParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(271);
+			setState(271); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
@@ -2251,7 +2251,7 @@ public class VariantQueryParser extends Parser {
 				match(NUMBER);
 				}
 				}
-				setState(273);
+				setState(273); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==NUMBER );
