@@ -1,24 +1,24 @@
 ## Build app ##
 
-FROM openjdk:16 AS builder
+FROM openjdk:17 AS builder
 WORKDIR /build/
 
 COPY . .
 RUN chmod +x ./gradlew
-RUN ./gradlew clean build -x test
+RUN ./gradlew clean bootJar -x test
 
 
 ## Run server ##
 
-FROM openjdk:16-bullseye AS server
+FROM openjdk:17-bullseye AS server
 WORKDIR /app
 
 # Download nextalign
-RUN curl -fsSL "https://github.com/nextstrain/nextclade/releases/download/2.3.1/nextalign-x86_64-unknown-linux-gnu" -o "nextalign"
+RUN curl -fsSL "https://github.com/nextstrain/nextclade/releases/download/2.5.0/nextalign-x86_64-unknown-linux-gnu" -o "nextalign"
 RUN chmod +x nextalign
 
 # Download Nextclade
-RUN curl -fsSL "https://github.com/nextstrain/nextclade/releases/download/2.3.1/nextclade-x86_64-unknown-linux-gnu" -o "nextclade"
+RUN curl -fsSL "https://github.com/nextstrain/nextclade/releases/download/2.5.0/nextclade-x86_64-unknown-linux-gnu" -o "nextclade"
 RUN chmod +x nextclade
 RUN ./nextclade dataset get --name 'sars-cov-2' --output-dir 'nextclade-data'
 

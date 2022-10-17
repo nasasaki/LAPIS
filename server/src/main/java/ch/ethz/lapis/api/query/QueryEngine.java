@@ -1,25 +1,68 @@
 package ch.ethz.lapis.api.query;
 
+import static ch.ethz.lapis.api.query.Database.Columns.AGE;
+import static ch.ethz.lapis.api.query.Database.Columns.COUNTRY;
+import static ch.ethz.lapis.api.query.Database.Columns.COUNTRY_EXPOSURE;
+import static ch.ethz.lapis.api.query.Database.Columns.DATE;
+import static ch.ethz.lapis.api.query.Database.Columns.DATE_SUBMITTED;
+import static ch.ethz.lapis.api.query.Database.Columns.DIED;
+import static ch.ethz.lapis.api.query.Database.Columns.DIVISION;
+import static ch.ethz.lapis.api.query.Database.Columns.DIVISION_EXPOSURE;
+import static ch.ethz.lapis.api.query.Database.Columns.FULLY_VACCINATED;
+import static ch.ethz.lapis.api.query.Database.Columns.GENBANK_ACCESSION;
+import static ch.ethz.lapis.api.query.Database.Columns.GISAID_CLADE;
+import static ch.ethz.lapis.api.query.Database.Columns.GISAID_EPI_ISL;
+import static ch.ethz.lapis.api.query.Database.Columns.HOSPITALIZED;
+import static ch.ethz.lapis.api.query.Database.Columns.HOST;
+import static ch.ethz.lapis.api.query.Database.Columns.LOCATION;
+import static ch.ethz.lapis.api.query.Database.Columns.MONTH;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_COVERAGE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_PANGO_LINEAGE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_QC_FRAME_SHIFTS_SCORE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_QC_MISSING_DATA_SCORE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_QC_MIXED_SITES_SCORE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_QC_OVERALL_SCORE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_QC_PRIVATE_MUTATIONS_SCORE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_QC_SNP_CLUSTERS_SCORE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTCLADE_QC_STOP_CODONS_SCORE;
+import static ch.ethz.lapis.api.query.Database.Columns.NEXTSTRAIN_CLADE;
+import static ch.ethz.lapis.api.query.Database.Columns.ORIGINATING_LAB;
+import static ch.ethz.lapis.api.query.Database.Columns.PANGO_LINEAGE;
+import static ch.ethz.lapis.api.query.Database.Columns.REGION;
+import static ch.ethz.lapis.api.query.Database.Columns.REGION_EXPOSURE;
+import static ch.ethz.lapis.api.query.Database.Columns.SAMPLING_STRATEGY;
+import static ch.ethz.lapis.api.query.Database.Columns.SEX;
+import static ch.ethz.lapis.api.query.Database.Columns.SRA_ACCESSION;
+import static ch.ethz.lapis.api.query.Database.Columns.STRAIN;
+import static ch.ethz.lapis.api.query.Database.Columns.SUBMITTING_LAB;
+import static ch.ethz.lapis.api.query.Database.Columns.YEAR;
+
 import ch.ethz.lapis.api.VariantQueryListener;
 import ch.ethz.lapis.api.entity.AggregationField;
 import ch.ethz.lapis.api.entity.req.SampleAggregatedRequest;
-import ch.ethz.lapis.api.entity.req.SampleDetailRequest;
 import ch.ethz.lapis.api.entity.req.SampleFilter;
 import ch.ethz.lapis.api.entity.res.SampleAggregated;
+import ch.ethz.lapis.api.exception.BadRequestException;
 import ch.ethz.lapis.api.exception.MalformedVariantQueryException;
 import ch.ethz.lapis.api.parser.VariantQueryLexer;
 import ch.ethz.lapis.api.parser.VariantQueryParser;
+import ch.ethz.lapis.core.Utils;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static ch.ethz.lapis.api.query.Database.Columns.*;
 
 public class QueryEngine {
 
@@ -57,6 +100,8 @@ public class QueryEngine {
                 for (int i = 0; i < fields.size(); i++) {
                     switch (fields.get(i)) {
                         case DATE -> sampleAggregated.setDate(Database.intToDate((Integer) key.get(i)));
+                        case YEAR -> sampleAggregated.setYear((Integer) key.get(i));
+                        case MONTH -> sampleAggregated.setMonth((Integer) key.get(i));
                         case DATESUBMITTED -> sampleAggregated
                             .setDateSubmitted(Database.intToDate((Integer) key.get(i)));
                         case REGION -> sampleAggregated.setRegion((String) key.get(i));
@@ -102,6 +147,20 @@ public class QueryEngine {
     public boolean[] matchSampleFilter(Database database, SampleFilter<?> sampleFilter) {
         Database db = database;
         SampleFilter<?> sf = sampleFilter;
+
+        // TODO This shouldn't be done here?
+        //  Validate yearMonthFrom and yearMonthTo
+        Pattern pattern = Pattern.compile("(\\d{4})([-]\\d{2})?([-]\\d{2})?");
+        if (sf.getYearMonthFrom() != null) {
+            if (!pattern.matcher(sf.getYearMonthFrom()).matches()) {
+                throw new BadRequestException("yearMonthFrom is malformed, it has to be yyyy-mm");
+            }
+        }
+        if (sf.getYearMonthTo() != null) {
+            if (!pattern.matcher(sf.getYearMonthTo()).matches()) {
+                throw new BadRequestException("yearMonthTo is malformed, it has to be yyyy-mm");
+            }
+        }
 
         // Filter variant
         var nucMutations = sf.getNucMutations();
@@ -185,6 +244,7 @@ public class QueryEngine {
         int numberRows = db.size();
         boolean[] matched;
         if (variantQueryExpr != null) {
+            Maybe.pushDownMaybe(variantQueryExpr);
             matched = variantQueryExpr.evaluate(db);
         } else {
             matched = new boolean[numberRows];
@@ -193,6 +253,9 @@ public class QueryEngine {
 
         // Filter metadata
         between(matched, db.getIntColumn(DATE), sf.getDateFrom(), sf.getDateTo());
+        between(matched, db.getIntColumn(YEAR), sf.getYearFrom(), sf.getYearTo());
+        betweenYearMonth(matched, db.getIntColumn(YEAR), db.getIntColumn(MONTH),
+            sf.getYearMonthFrom(), sf.getYearMonthTo());
         between(matched, db.getIntColumn(DATE_SUBMITTED),
             sf.getDateSubmittedFrom(), sf.getDateSubmittedTo());
         eq(matched, db.getStringColumn(REGION), sf.getRegion(), true);
@@ -225,15 +288,14 @@ public class QueryEngine {
             sf.getNextcladeQcFrameShiftsScoreFrom(), sf.getNextcladeQcFrameShiftsScoreTo());
         between(matched, db.getFloatColumn(NEXTCLADE_QC_STOP_CODONS_SCORE),
             sf.getNextcladeQcStopCodonsScoreFrom(), sf.getNextcladeQcStopCodonsScoreTo());
+        between(matched, db.getFloatColumn(NEXTCLADE_COVERAGE),
+            sf.getNextcladeCoverageFrom(), sf.getNextcladeCoverageTo());
 
         // Filter IDs
-        if (sf instanceof SampleDetailRequest) {
-            SampleDetailRequest sdr = (SampleDetailRequest) sf;
-            eq(matched, db.getStringColumn(GENBANK_ACCESSION), sdr.getGenbankAccession(), true);
-            eq(matched, db.getStringColumn(SRA_ACCESSION), sdr.getSraAccession(), true);
-            eq(matched, db.getStringColumn(GISAID_EPI_ISL), sdr.getGisaidEpiIsl(), true);
-            eq(matched, db.getStringColumn(STRAIN), sdr.getStrain(), true);
-        }
+        eq(matched, db.getStringColumn(GENBANK_ACCESSION), sf.getGenbankAccession(), true);
+        eq(matched, db.getStringColumn(SRA_ACCESSION), sf.getSraAccession(), true);
+        eq(matched, db.getStringColumn(GISAID_EPI_ISL), sf.getGisaidEpiIsl(), true);
+        eq(matched, db.getStringColumn(STRAIN), sf.getStrain(), true);
 
         return matched;
     }
@@ -329,6 +391,50 @@ public class QueryEngine {
         between(matched, data, dateFromInt, dateToInt);
     }
 
+
+    private void betweenYearMonth(
+        boolean[] matched,
+        Integer[] years,
+        Integer[] months,
+        String yearMonthFrom,
+        String yearMonthTo
+    ) {
+        if (yearMonthFrom == null && yearMonthTo == null) {
+            return;
+        }
+        Integer yearFromInt = null;
+        Integer monthFromInt = null;
+        Integer yearToInt = null;
+        Integer monthToInt = null;
+        if (yearMonthFrom != null) {
+            String[] split = yearMonthFrom.split("-");
+            yearFromInt = Utils.nullableIntegerValue(split[0]);
+            monthFromInt = Utils.nullableIntegerValue(split[1]);
+        }
+        if (yearMonthTo != null) {
+            String[] split = yearMonthTo.split("-");
+            yearToInt = Utils.nullableIntegerValue(split[0]);
+            monthToInt = Utils.nullableIntegerValue(split[1]);
+        }
+        if (yearMonthFrom != null && yearMonthTo != null) {
+            for (int i = 0; i < matched.length; i++) {
+                matched[i] = matched[i] && years[i] != null && months[i] != null
+                    && ((years[i] >= yearFromInt && months[i] >= monthFromInt) || years[i] > yearFromInt)
+                    && ((years[i] <= yearToInt && months[i] <= monthToInt) || years[i] < yearToInt);
+            }
+        } else if (yearMonthFrom != null) {
+            for (int i = 0; i < matched.length; i++) {
+                matched[i] = matched[i] && years[i] != null && months[i] != null
+                    && ((years[i] >= yearFromInt && months[i] >= monthFromInt) || years[i] > yearFromInt);
+            }
+        } else {
+            for (int i = 0; i < matched.length; i++) {
+                matched[i] = matched[i] && years[i] != null && months[i] != null
+                    && ((years[i] <= yearToInt && months[i] <= monthToInt) || years[i] < yearToInt);
+            }
+        }
+    }
+
     private VariantQueryExpr parseVariantQueryExpr(String variantQuery) {
         try {
             VariantQueryLexer lexer = new VariantQueryLexer(CharStreams.fromString(variantQuery.toUpperCase()));
@@ -351,6 +457,8 @@ public class QueryEngine {
     private String aggregationFieldToColumnName(AggregationField field) {
         return switch (field) {
             case DATE -> DATE;
+            case YEAR -> YEAR;
+            case MONTH -> MONTH;
             case DATESUBMITTED -> DATE_SUBMITTED;
             case REGION -> REGION;
             case COUNTRY -> COUNTRY;
