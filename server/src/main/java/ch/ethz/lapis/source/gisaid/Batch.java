@@ -4,4 +4,5 @@ import java.util.List;
 
 
 public record Batch(List<GisaidEntry> entries) {
+
 }

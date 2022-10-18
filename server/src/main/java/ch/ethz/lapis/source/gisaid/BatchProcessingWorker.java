@@ -62,7 +62,7 @@ public class BatchProcessingWorker {
 
     public BatchReport run(Batch batch) throws Exception {
         try {
-            int batchSize = batch.getEntries().size();
+            int batchSize = batch.entries().size();
             // System.out.println(LocalDateTime.now() + " [" + id + "] Received a batch");
             // Remove entries from the batch where no sequence is provided -> very weird
             batch = new Batch(batch.entries().stream()
@@ -245,10 +245,6 @@ public class BatchProcessingWorker {
                 .setUpdatedMetadataEntries(updatedMetadataEntries)
                 .setUpdatedSequenceEntries(updatedSequenceEntries);
         } finally {
-            // Clean up the work directory
-            if (!validSequences.isEmpty()) {
-                System.out.println(LocalDateTime.now() + " [" + id + "] Clean up");
-            }
             try (DirectoryStream<Path> directory = Files.newDirectoryStream(workDir)) {
                 for (Path path : directory) {
                     if (Files.isDirectory(path)) {
@@ -257,9 +253,6 @@ public class BatchProcessingWorker {
                         Files.delete(path);
                     }
                 }
-            }
-            if (!validSequences.isEmpty()) {
-                System.out.println(LocalDateTime.now() + " [" + id + "] Done!");
             }
         }
     }

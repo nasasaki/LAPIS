@@ -1,4 +1,4 @@
-// Generated from ch\ethz\lapis\api\parser\VariantQuery.g4 by ANTLR 4.10.1
+// Generated from ch/ethz/lapis/api/parser/VariantQuery.g4 by ANTLR 4.10.1
 
     package ch.ethz.lapis.api.parser;
 
@@ -19,10 +19,10 @@ public class VariantQueryParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9,
-		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, A=15, B=16, C=17, D=18,
-		E=19, F=20, G=21, H=22, I=23, J=24, K=25, L=26, M=27, N=28, O=29, P=30,
-		Q=31, R=32, S=33, T=34, U=35, V=36, W=37, X=38, Y=39, Z=40, MINUS=41,
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, A=15, B=16, C=17, D=18, 
+		E=19, F=20, G=21, H=22, I=23, J=24, K=25, L=26, M=27, N=28, O=29, P=30, 
+		Q=31, R=32, S=33, T=34, U=35, V=36, W=37, X=38, Y=39, Z=40, MINUS=41, 
 		DOT=42, ASTERISK=43, ORF=44, NUMBER=45, WHITESPACE=46;
 	public static final int
 		RULE_start = 0, RULE_expr = 1, RULE_single = 2, RULE_nuc_mut = 3, RULE_aa_mut = 4, 
@@ -48,19 +48,19 @@ public class VariantQueryParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'!'", "'&'", "'|'", "'('", "')'", "'MAYBE('", "':'", "'INS_'",
-			"'?'", "'['", "'-OF:'", "']'", "'EXACTLY-'", "','", "'A'", "'B'", "'C'",
-			"'D'", "'E'", "'F'", "'G'", "'H'", "'I'", "'J'", "'K'", "'L'", "'M'",
-			"'N'", "'O'", "'P'", "'Q'", "'R'", "'S'", "'T'", "'U'", "'V'", "'W'",
+			null, "'!'", "'&'", "'|'", "'('", "')'", "'MAYBE('", "':'", "'INS_'", 
+			"'?'", "'['", "'-OF:'", "']'", "'EXACTLY-'", "','", "'A'", "'B'", "'C'", 
+			"'D'", "'E'", "'F'", "'G'", "'H'", "'I'", "'J'", "'K'", "'L'", "'M'", 
+			"'N'", "'O'", "'P'", "'Q'", "'R'", "'S'", "'T'", "'U'", "'V'", "'W'", 
 			"'X'", "'Y'", "'Z'", "'-'", "'.'", "'*'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null,
-			null, null, null, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-			"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y",
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", 
+			"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", 
 			"Z", "MINUS", "DOT", "ASTERISK", "ORF", "NUMBER", "WHITESPACE"
 		};
 	}
@@ -713,7 +713,7 @@ public class VariantQueryParser extends Parser {
 			position();
 			setState(117);
 			match(T__6);
-			setState(120);
+			setState(120); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -758,7 +758,7 @@ public class VariantQueryParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(122);
+				setState(122); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -819,7 +819,7 @@ public class VariantQueryParser extends Parser {
 			position();
 			setState(128);
 			match(T__6);
-			setState(131);
+			setState(131); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -871,7 +871,7 @@ public class VariantQueryParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(133);
+				setState(133); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -914,7 +914,7 @@ public class VariantQueryParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(136);
+			setState(136); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -930,7 +930,7 @@ public class VariantQueryParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(138);
+				setState(138); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -2268,7 +2268,7 @@ public class VariantQueryParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(275);
+			setState(275); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
@@ -2278,7 +2278,7 @@ public class VariantQueryParser extends Parser {
 				match(NUMBER);
 				}
 				}
-				setState(277);
+				setState(277); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==NUMBER );
