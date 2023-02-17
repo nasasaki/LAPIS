@@ -9,3 +9,4 @@ docker-compose.override.yml
 BuildMe.sh
 *.BAK
 lapis-config.yml
+app/
