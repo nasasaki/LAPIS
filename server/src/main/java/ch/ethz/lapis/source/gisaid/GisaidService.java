@@ -62,7 +62,7 @@ public class GisaidService {
     private final GisaidApiConfig gisaidApiConfig;
     private final SeqCompressor nucSeqCompressor = new ZstdSeqCompressor(ZstdSeqCompressor.DICT.REFERENCE);
     private final SeqCompressor aaSeqCompressor = new ZstdSeqCompressor(ZstdSeqCompressor.DICT.AA_REFERENCE);
-    private final int batchSize = 400;
+    private final int batchSize = 800;
     private final Path geoLocationRulesFile;
     private final String notificationAuthKey;
 
